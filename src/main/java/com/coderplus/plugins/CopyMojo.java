@@ -87,6 +87,9 @@ extends AbstractMojo
 	 */
 	@Parameter( property = "copy.ignoreFileNotFoundOnIncremental", defaultValue = "true" )
 	boolean ignoreFileNotFoundOnIncremental;
+	
+	@Parameter( property = "copy.ignoreFileNotFound", defaultValue = "true" )
+    boolean ignoreFileNotFound;
 
 
 	/**
@@ -121,6 +124,8 @@ extends AbstractMojo
 		if(!srcFile.exists()){
 			if(ignoreFileNotFoundOnIncremental && buildContext.isIncremental()){
 				getLog().warn("sourceFile "+srcFile.getAbsolutePath()+ " not found during incremental build");
+			} else if(ignoreFileNotFound){
+                getLog().warn("sourceFile "+srcFile.getAbsolutePath()+ " not found during build");
 			} else {
 				getLog().error("sourceFile "+srcFile.getAbsolutePath()+ " does not exist");
 			}
